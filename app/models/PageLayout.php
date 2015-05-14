@@ -17,11 +17,11 @@ class PageLayout extends Eloquent {
     protected $table = "cms_page_layout";
 
     public function pageElements(){
-        return $this->hasMany('App\Models\PageElement', 'layout_id', 'id');
+        return $this->hasMany('PageElement', 'layout_id', 'id');
     }
     
     public function sublayouts() {
-        return $this->hasMany('App\Models\PageElement', 'layout_id', 'id')->where('parent_id',0);
+        return $this->hasMany('PageElement', 'layout_id', 'id')->where('parent_id',0);
     }
 
     

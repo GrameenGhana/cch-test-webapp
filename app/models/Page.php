@@ -15,6 +15,6 @@ class Page  extends Eloquent {
     
     protected $table="cms_page";
      public function layouts() {
-        return $this->hasMany('App\Models\PageLayout', 'page_id','id');
+        return $this->hasMany('PageLayout', 'page_id','id');
     }
 }

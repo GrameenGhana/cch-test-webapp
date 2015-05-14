@@ -17,10 +17,7 @@ Route::get('/', function()
 });
 Route::group(array('prefix' => 'api/v1'), function()
 {
-    
-
-    Route::any('pages', 'PageController@pageList');
-    
+    Route::any('pages', 'PageController@pageList');    
     Route::any('pages/viewall', 'PageController@serviceAllPageDetails');
     Route::any('pages/{id}', 'PageController@servicePageDetails');
 });
