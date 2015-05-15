@@ -28,7 +28,9 @@
         {{ HTML::style('css/chosen/chosen.css'); }} 
 
         <!-- jQuery 2.0.2 -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+   
+        
+        {{ HTML::script('js/jquery.min.js'); }}
         <!-- jQuery UI 1.10.3 -->
         {{ HTML::script('js/jquery-ui-1.10.3.min.js'); }}
         <!-- Bootstrap -->
@@ -178,20 +180,23 @@ var EventTracker = function () {
 
             <!-- Right side column. Contains the navbar and content of the page -->
             <aside class="right-side">
+                <section class="content invoice">
+
                 <!-- Content Header (Page header) -->
                 @yield('content-header')
 
                 <!-- Main content -->
                 @yield('content')
+                </section>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
         <!-- Morris.js charts -->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
         {{ HTML::script('js/plugins/morris/morris.min.js'); }}
+        {{ HTML::script('js/raphael-min.js'); }}
         <!-- Sparkline -->
         {{ HTML::script('js/plugins/sparkline/jquery.sparkline.min.js'); }}
-        <!-- jvectormap -->
+        <!-- jvectormap --> 
         {{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'); }}
         {{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'); }}
         <!-- fullCalendar -->
