@@ -33,6 +33,7 @@ class PageController extends Controller {
 
         $this->imageLoc = array('left' => "Left", 'right' => "Right");
         $this->rules = array('title' => 'required|min:3');
+        $this->layoutRules = array('element_type' => 'required');
     }
 
     public function index() {
@@ -171,7 +172,7 @@ class PageController extends Controller {
                             ->withInput()
                             ->withErrors($validator);
         } else {
-            $layoutNo =0;// Input::get('layoutNo');
+            $layoutNo = Input::get('layout_cnt');
 //            $laySequence = json_decode(Input::get('layoutSequence'));
 //            foreach ($array as $key => $value) {
 //                
@@ -188,16 +189,35 @@ class PageController extends Controller {
             $page->linked_page = Input::get('linked_page');
             $page->tag = Input::get('tag');
 //            
-            
-            
-                $page->save();
-                
+
+            $page->save();
+
             for ($i = 1; $i <= $layoutNo; $i++) {
                 $pageLayout = new PageLayout;
                 $pageLayout->page_id = $page->id;
-                $pageLayout->element_type = Input::get("et_$i");
-                $pageLayout->properties = Input::get("properties_$i");
-                $pageLayout->parent_id = Input::get("parent_$i");
+                $pageLayout->element_type = Input::get("element_type_s$i");
+                $pageLayout->properties = Input::get("properties_s$i");
+                $pageLayout->parent_element = 0; //Input::get("parent_$i")
+                $pageLayout->status = 1;
+                $layoutValidator = Validator::make(array('element_type' => Input::get("element_type_s$i")), $this->layoutRules);
+                $pageLayout->save();
+                $layoutElementCnt = Input::get("element_cnt_s$i");
+                for ($k = 1; $k <= $layoutElementCnt; $k++) {
+                    $element = new PageElement;
+                    $ik = "_s$i" . "__$k";
+                    $element->layout_id = $pageLayout->id;
+                    $element->element_type = Input::get("element_type$ik");
+                    $element->properties = Input::get("properties$ik");
+                    $element->value = Input::get("content$ik");
+                    $element->position = Input::get("position$ik");
+                    $element->status = Input::get("status$ik");
+                    $element->link_type = Input::get("link_type$ik");
+                    $element->link_value = Input::get("link_value$ik");
+                    $element->image = Input::get("image$ik");
+                    $element->image_pos = Input::get("image_loc$ik");
+                    $element->status = 1;
+                    $element->save();
+                }
             }
             try {
                 Session::flash('message', "{$page->title}" . Lang::get('messages.added_successfully'));

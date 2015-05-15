@@ -152,7 +152,7 @@
                                         <div class="col-xs-6">
                                             <div class="form-group">
                                                 {{ Form::label('link_value_s1__1','Link Value') }}
-                                                <input type="text" name="properties_s1__1" value="" class="form-control" />
+                                                <input type="text" name="link_value_s1__1" value="" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
