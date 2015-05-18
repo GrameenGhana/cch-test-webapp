@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Description of PageController
  *
@@ -18,9 +17,28 @@ class PageController extends Controller {
       |
      */
 
+    public function __construct() {
+        $this->pageTypes = array('d' => "Dynamic", 's' => "Static");
+        $this->status = array('1' => "Active", '0' => "In Active");
+        $this->elementType = array("button" => "Button",
+            "text_view" => "Text View",
+            "image" => "Image",
+            "video" => "Video",
+            "linear" => "linear",
+            "linear_list" => "Linear List");
+
+        $this->pageElementType = array(
+            "linear" => "linear",
+            "linear_list" => "Linear List");
+
+        $this->imageLoc = array('left' => "Left", 'right' => "Right");
+        $this->rules = array('title' => 'required|min:3');
+        $this->layoutRules = array('element_type' => 'required');
+    }
+
     public function index() {
         $pages = Page::orderBy('title', 'asc')->paginate(100);
-        return View::make('page.index', array('pages' => $pages));
+        return View::make('page.page_index', array('pages' => $pages));
     }
 
     function pageList() {
@@ -36,6 +54,8 @@ class PageController extends Controller {
                 "status" => $value->status,
                 "type" => $value->page_type,
                 "parent" => $value->parent,
+                "tag" => $value->tag,
+                "linked_page" => $value->linked_page,
                 "updated_at" => date('Y-m-d H:i:s', strtotime($value->updated_at))
             );
         }
@@ -65,6 +85,8 @@ class PageController extends Controller {
             "status" => $pageDetail->status,
             "type" => $pageDetail->page_type,
             "parent" => $pageDetail->parent,
+            "tag" => $pageDetail->tag,
+            "linked_page" => $pageDetail->linked_page,
             "updated_at" => date('Y-m-d H:i:s', strtotime($pageDetail->updated_at))
         );
 
@@ -121,7 +143,17 @@ class PageController extends Controller {
      * @return Response
      */
     public function create() {
-        return View::make('page.create', array("reg" => $this->reg));   //
+        $parent = Input::get('parent');
+        $page = Page::find($parent);
+
+        $pages = Page::all();
+        return View::make('page.page_create', array("parent" => $page,
+                    "pages" => $pages,
+                    'page_types' => $this->pageTypes,
+                    'status' => $this->status,
+                    "element_type" => $this->elementType,
+                    "page_element" => $this->pageElementType,
+                    "image_loc" => $this->imageLoc));   //
     }
 
     /**
@@ -140,29 +172,55 @@ class PageController extends Controller {
                             ->withInput()
                             ->withErrors($validator);
         } else {
-            $layoutNo = Input::get('layoutNo');
-            $laySequence = json_decode(Input::get('layoutSequence'));
-            foreach ($array as $key => $value) {
-                
-            }
+            $layoutNo = Input::get('layout_cnt');
+//            $laySequence = json_decode(Input::get('layoutSequence'));
+//            foreach ($array as $key => $value) {
+//                
+//            }
 
             $page = new Page;
             $page->title = Input::get('title');
             $page->description = Input::get('description');
-            $page->className = Input::get('className');
-            $page->type = Input::get('type');
+            $page->class_name = Input::get('class_name');
+            $page->position = Input::get('position');
+            $page->page_type = Input::get('page_type');
             $page->status = Input::get('status');
+            $page->parent = Input::get('parent');
+            $page->linked_page = Input::get('linked_page');
+            $page->tag = Input::get('tag');
+//            
+
             $page->save();
+
             for ($i = 1; $i <= $layoutNo; $i++) {
                 $pageLayout = new PageLayout;
                 $pageLayout->page_id = $page->id;
-                $pageLayout->element_type = Input::get("et_$i");
-                $pageLayout->properties = Input::get("properties_$i");
-                $pageLayout->parent_id = Input::get("parent_$i");
+                $pageLayout->element_type = Input::get("element_type_s$i");
+                $pageLayout->properties = Input::get("properties_s$i");
+                $pageLayout->parent_element = 0; //Input::get("parent_$i")
+                $pageLayout->status = 1;
+                $layoutValidator = Validator::make(array('element_type' => Input::get("element_type_s$i")), $this->layoutRules);
+                $pageLayout->save();
+                $layoutElementCnt = Input::get("element_cnt_s$i");
+                for ($k = 1; $k <= $layoutElementCnt; $k++) {
+                    $element = new PageElement;
+                    $ik = "_s$i" . "__$k";
+                    $element->layout_id = $pageLayout->id;
+                    $element->element_type = Input::get("element_type$ik");
+                    $element->properties = Input::get("properties$ik");
+                    $element->value = Input::get("content$ik");
+                    $element->position = Input::get("position$ik");
+                    $element->status = Input::get("status$ik");
+                    $element->link_type = Input::get("link_type$ik");
+                    $element->link_value = Input::get("link_value$ik");
+                    $element->image = Input::get("image$ik");
+                    $element->image_pos = Input::get("image_loc$ik");
+                    $element->status = 1;
+                    $element->save();
+                }
             }
             try {
-                $page->save();
-                Session::flash('message', "{$page->page}" . Lang::get('messages.added_successfully'));
+                Session::flash('message', "{$page->title}" . Lang::get('messages.added_successfully'));
             } catch (Exception $exc) {
                 Session::flash('message', $exc->getMessage() . "Unable to");
             }

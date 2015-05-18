@@ -22,7 +22,11 @@ Route::group(array('prefix' => 'api/v1'), function()
     Route::any('pages/{id}', 'PageController@servicePageDetails');
 });
 
+<<<<<<< HEAD
 //Stats Charts
 Route::get('stats/generalcharts', array('uses' => 'StatsController@showGeneralCharts'));
 Route::get('stats/detailedcharts', array('uses' => 'StatsController@showDetailedCharts'));
 Route::get('stats/timeseriescharts', array('uses' => 'StatsController@showTimeseriesCharts'));
+=======
+Route::resource('page','PageController'); 
+>>>>>>> 8ab42dcc212b4ac6a45ccf4f7655bcdd0c6ab71f
