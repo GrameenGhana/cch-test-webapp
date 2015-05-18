@@ -21,3 +21,8 @@ Route::group(array('prefix' => 'api/v1'), function()
     Route::any('pages/viewall', 'PageController@serviceAllPageDetails');
     Route::any('pages/{id}', 'PageController@servicePageDetails');
 });
+
+//Stats Charts
+Route::get('stats/generalcharts', array('uses' => 'StatsController@showGeneralCharts'));
+Route::get('stats/detailedcharts', array('uses' => 'StatsController@showDetailedCharts'));
+Route::get('stats/timeseriescharts', array('uses' => 'StatsController@showTimeseriesCharts'));

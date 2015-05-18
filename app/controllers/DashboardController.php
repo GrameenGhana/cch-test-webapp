@@ -17,4 +17,8 @@ class DashboardController extends BaseController {
 	{
 	   	    return View::make('dashboards.stayingwell',array('dashboard'=>$this->dashboard));
 	}
+
+    
+   
+
 }

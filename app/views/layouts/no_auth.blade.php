@@ -156,6 +156,19 @@ var EventTracker = function () {
                             </ul>
                         </li>
 
+                        <li class="treeview {{ Request::is('stats/*') ? 'active' : '' }}">
+                            <a href="#">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <span>Stats</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ URL::to('stats/generalcharts')}}"><i class="fa fa-angle-double-right"></i> General Charts </a></li>
+                                <li><a href="{{ URL::to('stats/detailedcharts')}}"><i class="fa fa-angle-double-right"></i> Detailed Charts </a></li>
+                                <li><a href="{{ URL::to('stats/timeseriescharts')}}"><i class="fa fa-angle-double-right"></i> Timeseries Charts </a></li>
+                            </ul>
+                        </li>
+
                         <li class="treeview {{ (Request::is('devices*') or Request::is('facilities*')  or Request::is('users*') or Request::is('tracker*')) ? 'active' : '' }}">
                             <a href="#">
                                 <i class="fa fa-cogs"></i>
