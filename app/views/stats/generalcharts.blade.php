@@ -1,5 +1,17 @@
 @extends('layouts.no_auth')
+<?php
+// $useageByVersion = DB::table('cch_tracker')
+//                    ->selectRaw('version','count(*) as versioncount')
+//                    ->whereRaw('version is Not Null')
+//                    ->groupBy('version')
+//                    ->get();
+ 
+ $useageByVersion = DB::select(DB::raw('SELECT version,count(*) as aggregate FROM `cch_tracker`  GROUP BY version'));
+ 
+            //var_dump($useageByVersion)
 
+
+?>
 @section('content')	
 
 <div class="row">
@@ -254,6 +266,18 @@
                         </div><!-- /.box -->
 
                     </div>
+                    
+                    
+                    
+                </div>
+                
+                <hr class="space">
+
+                <div class="row" id="roleBox">
+                    <center><h3>Users By Role</h3></center>
+
+                    <div id="container3" class="col-md-8"></div>
+                    
                 </div>
 @stop
 
@@ -275,6 +299,64 @@ $(function() {
     )
   
 });
+
+
+//Usage By version  Pie Chart
+     $(function () {
+     	
+     	// Radialize the colors
+ 		Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+ 		    return {
+ 		        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+ 		        stops: [
+ 		            [0, color],
+ 		            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+ 		        ]
+ 		    };
+		});
+ 		
+ 		// Build the chart
+         $('#container3').highcharts({
+             chart: {
+                 plotBackgroundColor: null,
+                 plotBorderWidth: null,
+                 plotShadow: false
+             },
+             title: {
+                 text: 'Usage By Version'
+             },
+             tooltip: {
+         	    pointFormat: '{series.name}: <b>{point.y} GHS</b>'
+             },
+             plotOptions: {
+                 pie: {
+                     allowPointSelect: true,
+                     cursor: 'pointer',
+                     dataLabels: {
+                         enabled: true,
+                         format: '<b>{point.name}</b>: {point.y} ',
+                         style: {
+                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                         },
+                         connectorColor: 'silver'
+                     }
+                 }
+             },
+             series: [{
+                 type: 'pie',
+                 name: 'Transactions',
+                 data: [
+    <?php foreach ($useageByVersion as $value) {
+        if ($value != "") {
+            echo "['$value->version',$value->aggregate],";
+        }
+    } ?>
+                   
+                 ]
+                 
+             }]
+         });
+     });
 
 
 </script>
