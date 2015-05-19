@@ -1,8 +1,6 @@
 @extends('layouts.no_auth')
 
 @section('content')	
-<h1>General Charts Here!</h1>
-
 
 <div class="row">
                     <center><h3>Users By Gender</h3></center>
@@ -118,6 +116,145 @@
 
                     </div>
                 </div>
+
+
+                <hr class="space">
+
+                <div class="row" id="roleBox">
+                    <center><h3>Users By Role</h3></center>
+
+                    <div id="byRole" class="col-md-8"></div>
+
+                    <div class="col-md-4">
+
+                        <div class="box">
+                            <div class="box-header">
+                            </div><!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>Role</th>
+                                            <th>Progress</th>
+                                            <th style="width: 40px">Total</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Admin</td>
+                                            <td>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersadmin * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersadmin }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Concern</td>
+                                            <td>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersconcern * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersconcern }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>District Admin</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersdistrictadmin * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersdistrictadmin }}</span></td>
+                                        </tr>
+
+                                       <tr>
+                                            <td>District Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersdistrictsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersdistrictsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>National Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersnationalsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersnationalsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Regional Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersregionalsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersregionalsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Sub-district Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersdistrictsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $userssubdistrictsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Nurse</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersnurse * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersnurse }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Researcher</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersresearcher * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersresearcher }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($userssupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $userssupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>System</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($userssystem * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $userssystem }}</span></td>
+                                        </tr>
+
+
+
+                                    </tbody></table>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+
+                    </div>
+                </div>
 @stop
 
 @section('script')
@@ -131,6 +268,10 @@ $(function() {
     
     $('#byGroup').highcharts(
     {{json_encode($usersByGroup)}}
+    )
+
+     $('#byRole').highcharts(
+    {{json_encode($usersByRole)}}
     )
   
 });
