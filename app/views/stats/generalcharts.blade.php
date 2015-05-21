@@ -1,8 +1,18 @@
 @extends('layouts.no_auth')
+<?php
+// $useageByVersion = DB::table('cch_tracker')
+//                    ->selectRaw('version','count(*) as versioncount')
+//                    ->whereRaw('version is Not Null')
+//                    ->groupBy('version')
+//                    ->get();
+ 
+ $useageByVersion = DB::select(DB::raw('SELECT version,count(*) as aggregate FROM `cch_tracker`  GROUP BY version'));
+ 
+            //var_dump($useageByVersion)
 
+
+?>
 @section('content')	
-<h1>General Charts Here!</h1>
-
 
 <div class="row">
                     <center><h3>Users By Gender</h3></center>
@@ -118,6 +128,157 @@
 
                     </div>
                 </div>
+
+
+                <hr class="space">
+
+                <div class="row" id="roleBox">
+                    <center><h3>Users By Role</h3></center>
+
+                    <div id="byRole" class="col-md-8"></div>
+
+                    <div class="col-md-4">
+
+                        <div class="box">
+                            <div class="box-header">
+                            </div><!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <th>Role</th>
+                                            <th>Progress</th>
+                                            <th style="width: 40px">Total</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Admin</td>
+                                            <td>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersadmin * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersadmin }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Concern</td>
+                                            <td>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersconcern * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersconcern }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>District Admin</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersdistrictadmin * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersdistrictadmin }}</span></td>
+                                        </tr>
+
+                                       <tr>
+                                            <td>District Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersdistrictsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersdistrictsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>National Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersnationalsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersnationalsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Regional Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersregionalsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersregionalsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Sub-district Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersdistrictsupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $userssubdistrictsupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Nurse</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersnurse * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersnurse }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Researcher</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($usersresearcher * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $usersresearcher }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Supervisor</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($userssupervisor * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $userssupervisor }}</span></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>System</td>
+                                            <td>
+                                                <div class="progress xs progress-striped active">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: <?php echo (($userssystem * 100) / $usersCount ); ?>%"></div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-yellow">{{ $userssystem }}</span></td>
+                                        </tr>
+
+
+
+                                    </tbody></table>
+                            </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+
+                    </div>
+                    
+                    
+                    
+                </div>
+                
+                <hr class="space">
+
+                <div class="row" id="roleBox">
+                    <center><h3>Users By Role</h3></center>
+
+                    <div id="container3" class="col-md-8"></div>
+                    
+                </div>
 @stop
 
 @section('script')
@@ -132,8 +293,70 @@ $(function() {
     $('#byGroup').highcharts(
     {{json_encode($usersByGroup)}}
     )
+
+     $('#byRole').highcharts(
+    {{json_encode($usersByRole)}}
+    )
   
 });
+
+
+//Usage By version  Pie Chart
+     $(function () {
+     	
+     	// Radialize the colors
+ 		Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+ 		    return {
+ 		        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+ 		        stops: [
+ 		            [0, color],
+ 		            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+ 		        ]
+ 		    };
+		});
+ 		
+ 		// Build the chart
+         $('#container3').highcharts({
+             chart: {
+                 plotBackgroundColor: null,
+                 plotBorderWidth: null,
+                 plotShadow: false
+             },
+             title: {
+                 text: 'Usage By Version'
+             },
+             tooltip: {
+         	    pointFormat: '{series.name}: <b>{point.y} GHS</b>'
+             },
+             plotOptions: {
+                 pie: {
+                     allowPointSelect: true,
+                     cursor: 'pointer',
+                     dataLabels: {
+                         enabled: true,
+                         format: '<b>{point.name}</b>: {point.y} ',
+                         style: {
+                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                         },
+                         connectorColor: 'silver'
+                     }
+                 }
+             },
+             series: [{
+                 type: 'pie',
+                 name: 'Transactions',
+                 data: [
+    <?php foreach ($useageByVersion as $value) {
+        if ($value != "") {
+            echo "['$value->version',$value->aggregate],";
+        }
+    } ?>
+                   
+                 ]
+                 
+             }]
+         });
+     });
 
 
 </script>
