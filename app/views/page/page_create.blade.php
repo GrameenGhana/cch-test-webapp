@@ -228,7 +228,7 @@
         firstContent = firstContent.replace(/#1 Layout/g, '#' + currentElementCnt + " Layout");
         $(firstContent).find("input").val("");
         $(firstContent).find("h1").html("#" + currentElementCnt + " Layout");
-        alert(firstPitem)
+//        alert(firstPitem)
         $(firstContent).find("#pelement_s"+(currentElementCnt)).html(firstPitem);
         $(firstContent).find("select").val("");
         $(firstContent).find("textarea").val("");
