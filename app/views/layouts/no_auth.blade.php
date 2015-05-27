@@ -183,6 +183,7 @@ var EventTracker = function () {
                                 <li class="{{ Request::is('users/*') ? 'active' : '' }}"><a href="{{ URL::to('users') }}"><i class="fa fa-users"></i>Users</a></li>
                                 <li class="{{ Request::is('districtadmin/*') ? 'active' : '' }}"><a href="{{ URL::to('districtadmin') }}"><i class="fa fa-users"></i>District Admins</a></li>
                                 <li class="{{ Request::is('tracker*') ? 'active' : '' }}"><a href="{{ URL::to('tracker') }}"><i class="fa fa-file"></i>Logs</a></li>
+                             <li class="{{ Request::is('page*') ? 'active' : '' }}"><a href="{{ URL::to('page') }}"><i class="fa fa-file"></i>CMS</a></li>
                             </ul>
                         </li>
 

@@ -247,9 +247,14 @@ class PageController extends Controller {
      */
     public function edit($id) {
         //
-
+$pages = Page::where("app","CCH")->orderBy('title', 'asc');
         $page = Page::find($id);
-        return View::make('page.edit', array('page' => $page));
+            return View::make('page.page_edit', array('page' => $page,"pages"=>$pages,
+                'page_types' => $this->pageTypes,
+                    'status' => $this->status,
+                    "element_type" => $this->elementType,
+                    "page_element" => $this->pageElementType,
+                    "image_loc" => $this->imageLoc));
     }
 
     /**

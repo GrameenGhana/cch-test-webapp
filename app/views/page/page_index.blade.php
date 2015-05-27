@@ -1,6 +1,7 @@
 @extends('layouts.no_auth')
 
 @section('content')	
+<a class="btn btn-info" href="{{ URL::to('page/create') }}">Create page </a>
 <table id="distable" class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -27,6 +28,8 @@
             <td> {{ $value->position}} </td>
             <td> {{ count($value->layouts)}} </td>
             <td>   
+                  <a title="" class="btn btn-sm btn-info" href="{{ URL::to('page/'.$value->id.'/edit') }}"><i class="glyphicon glyphicon-edit"></i></a>
+              
                </td>
         </tr>
         @endforeach
