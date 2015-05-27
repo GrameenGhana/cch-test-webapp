@@ -7,9 +7,9 @@
 //                    ->get();
  
  $useageByVersion = DB::select(DB::raw('SELECT version,count(*) as aggregate FROM `cch_tracker`  GROUP BY version'));
+ $useageByDay = DB::select(DB::raw('SELECT Count(*) as dailycount , DAYNAME(updated_at) as day From cch_tracker GROUP BY DAYNAME(updated_at)'));
  
-            //var_dump($useageByVersion)
-
+            //var_dump($useageByDay);
 
 ?>
 @section('content')	
@@ -274,11 +274,20 @@
                 <hr class="space">
 
                 <div class="row" id="roleBox">
-                    <center><h3>Users By Role</h3></center>
+                    <center><h3>Usage By Version</h3></center>
 
                     <div id="container3" class="col-md-8"></div>
                     
                 </div>
+                
+                <div class="row" id="roleBox">
+                    <center><h3></h3></center>
+
+                    <div id="container2" class="col-md-10" ></div>
+                    
+                </div>
+                
+                
 @stop
 
 @section('script')
@@ -323,10 +332,10 @@ $(function() {
                  plotShadow: false
              },
              title: {
-                 text: 'Usage By Version'
+                 text: ''
              },
              tooltip: {
-         	    pointFormat: '{series.name}: <b>{point.y} GHS</b>'
+         	    pointFormat: '{series.name}: <b>{point.y}</b>'
              },
              plotOptions: {
                  pie: {
@@ -357,7 +366,50 @@ $(function() {
              }]
          });
      });
-
+     
+     
+     //User By Access day by day Time Series
+      $(function () {
+         $('#container2').highcharts({
+             title: {
+                 text: 'User By Access by day',
+                 x: -20 //center
+             },
+            
+             xAxis: {
+                 categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+             },
+             yAxis: {
+                 title: {
+                     text: 'Usage'
+                 },
+                 plotLines: [{
+                     value: 0,
+                     width: 1,
+                     color: '#808080'
+                 }]
+             },
+            
+             legend: {
+                 layout: 'vertical',
+                 align: 'right',
+                 verticalAlign: 'middle',
+                 borderWidth: 0
+             },
+             series: [ {
+                 name: 'Usage',
+                 data: [<?php
+    foreach ($useageByDay as $value) {
+        if ($value != "") {
+            echo "$value->dailycount,";
+        }
+    }
+    ?>]
+             }]
+         });
+     });
+     
+    
 
 </script>
 
