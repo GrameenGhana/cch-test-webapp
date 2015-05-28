@@ -219,16 +219,26 @@
                   series: [
 
                   <?php 
+                  							foreach ($usersByRegion as $value) {
+
+                  								$usersByRoleDistrict = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,district FROM users WHERE region='$value->region' GROUP BY district"));
 
                                                    //query to get users by region by district and by facility 
                                            		foreach ($usersByRoleDistrict as $v) {
                                                    $usersByRoleDistrictFacility = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,facility_name FROM users WHERE district ='$v->district' GROUP BY facility_name"));
+                                                   
+                                                   echo "{ id : '$v->district' , name : '$v->district' , data : [ ";
+
                                                    foreach ($usersByRoleDistrictFacility as $vf) {
                   										//print_r( array('id'=>"$v->district","name"=>"$v->district", "data" => [array("name"=>"$vf->facility_name","y"=>"$vf->aggregate")]) );
-                  										echo " { id: '$v->district',data: [ y: $vf->aggregate,name: '$vf->facility_name'] } ,";
+                  										echo " { y: $vf->aggregate,name: '$vf->facility_name'  } ,";
                   									}
 
+                  									echo " ] },";
+
                                            		}
+
+                                           	}
 
                   ?>
                   ]

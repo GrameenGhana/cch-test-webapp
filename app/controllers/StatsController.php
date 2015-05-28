@@ -186,7 +186,7 @@ class StatsController extends BaseController {
             }
         } 
 
-        return $data;
+        return $usersByRole;
     }
 
     public function showTimeseriesCharts()
