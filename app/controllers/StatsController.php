@@ -171,7 +171,22 @@ class StatsController extends BaseController {
 
      public function showDetailedCharts()
     {
+
+
+
             return View::make('stats.detailcharts');
+    }
+
+    public function getUsersVyRoleData(){
+         $usersByRole = DB::connection('mysql2')->select(DB::raw('SELECT role,count(username) as aggregate FROM users  GROUP BY role'));
+         $data= array();
+        foreach ($usersByRole as $value) {
+            if ($value != "") {
+            $data[] = array($value->role,$value->aggregate);
+            }
+        } 
+
+        return $data;
     }
 
     public function showTimeseriesCharts()

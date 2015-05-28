@@ -27,4 +27,6 @@ Route::get('stats/generalcharts', array('uses' => 'StatsController@showGeneralCh
 Route::get('stats/detailedcharts', array('uses' => 'StatsController@showDetailedCharts'));
 Route::get('stats/timeseriescharts', array('uses' => 'StatsController@showTimeseriesCharts'));
 
+Route::get('/getusersbyrole', array('as'=>'getdata', 'uses'=>'StatsController@getUsersVyRoleData'));
+
 Route::resource('page','PageController'); 
