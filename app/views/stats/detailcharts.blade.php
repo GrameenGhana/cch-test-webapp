@@ -10,6 +10,9 @@
 //modules with count of users 
  $usersByModule = DB::connection('mysql2')->select(DB::raw('SELECT module,count(username) as aggregate FROM moduleusage  GROUP BY module'));
 
+ //modules with count of time spent
+ $timeByModule = DB::connection('mysql2')->select(DB::raw('SELECT module,sum(mins_spent) as aggregate FROM moduleusage  GROUP BY module'));
+
 ?>
 @section('content')	
 
@@ -29,9 +32,17 @@
 
                 <hr class="space">
 
-                <div class="row" id="moduleBox">
+                <div class="row" id="usersmoduleBox">
 
                     <div id="users_module_container" class="col-md-8"></div>
+                    
+                </div>
+
+                 <hr class="space">
+
+                <div class="row" id="timespentmoduleBox">
+
+                    <div id="time_module_container" class="col-md-8"></div>
                     
                 </div>
 @stop
@@ -274,10 +285,10 @@
            										 	name: '$value->module' ,
            										 	data : [ ";
 
-           									$usersByModuleFacilityType = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,facility_type FROM moduleusage WHERE module='$value->module' GROUP BY facility_type"));
+           									$usersByModuleDistrict = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,district FROM moduleusage WHERE module='$value->module' GROUP BY district"));
 
-           									foreach ($usersByModuleFacilityType as $v) {
-           										echo "{name: '$v->facility_type',y: $v->aggregate,drilldown: '$v->facility_type' },";
+           									foreach ($usersByModuleDistrict as $v) {
+           										echo "{name: '$v->district',y: $v->aggregate,drilldown: '$v->district' },";
            									}
 
                                                 echo "]},";
@@ -355,15 +366,15 @@
                   <?php 
                   							foreach ($usersByModule as $value) {
 
-                  								$usersByModuleFacilityType = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,facility_type FROM moduleusage WHERE module='$value->module' GROUP BY facility_type"));
+                  								$usersByModuleDistrict = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,district FROM moduleusage WHERE module='$value->module' GROUP BY district"));
 
                                                    //query to get users by module by facility type and by facility 
-                                           		foreach ($usersByModuleFacilityType as $v) {
-                                                   $usersByModuleFacilityTypeFacility = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,name FROM moduleusage WHERE facility_type ='$v->facility_type' GROUP BY name"));
+                                           		foreach ($usersByModuleDistrict as $v) {
+                                                   $usersByModuleDistrictFacility = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,name FROM moduleusage WHERE district ='$v->district' GROUP BY name"));
                                                    
-                                                   echo "{ id : '$v->facility_type' , name : '$v->facility_type' , data : [ ";
+                                                   echo "{ id : '$v->district' , name : '$v->district' , data : [ ";
 
-                                                   foreach ($usersByModuleFacilityTypeFacility as $vf) {
+                                                   foreach ($usersByModuleDistrictFacility as $vf) {
                   										//print_r( array('id'=>"$v->district","name"=>"$v->district", "data" => [array("name"=>"$vf->facility_name","y"=>"$vf->aggregate")]) );
                   										echo " { y: $vf->aggregate,name: '$vf->name'  } ,";
                   									}
@@ -378,6 +389,133 @@
                   ]
               }
           });
+
+
+// time spent per module chart
+          $('#time_module_container').highcharts({
+              chart: {
+                  type: 'column',
+                  events: {
+                      drilldown: function (e) {
+                          if (!e.seriesOptions) {
+
+                              var chart = this,
+                                  drilldowns = {
+
+                                  	 <?php 
+
+                                  	 foreach ($timeByModule as $value) {
+       										 if ($value != "") {
+           										 echo "'$value->module' : { 
+           										 	name: '$value->module' ,
+           										 	data : [ ";
+
+           									$timeByModuleDistrict = DB::connection('mysql2')->select(DB::raw("SELECT sum(mins_spent) as aggregate,district FROM moduleusage WHERE module='$value->module' GROUP BY district"));
+
+           									foreach ($timeByModuleDistrict as $v) {
+           										echo "{name: '$v->district',y: $v->aggregate,drilldown: '$v->district' },";
+           									}
+
+                                                echo "]},";
+                                            
+                                        }
+
+                                    }
+                                    
+                                           
+       									
+       										
+   									 		
+
+   									 ?>
+
+                                  },
+
+                                  
+
+                                series = drilldowns[e.point.name];
+
+                              // Show the loading label
+                              chart.showLoading('Loading data ...');
+
+                              setTimeout(function () {
+                                  chart.hideLoading();
+                                  chart.addSeriesAsDrilldown(e.point, series);
+                              }, 1000);
+                          }
+
+                      }
+                  }
+              },
+              title: {
+                  text: 'Time Spent By Module (mins)'
+              },
+              xAxis: {
+                  type: 'category'
+              },
+
+              legend: {
+                  enabled: false
+              },
+
+              credits: {
+                  enabled: false
+              },
+
+              plotOptions: {
+                  series: {
+                      borderWidth: 0,
+                      dataLabels: {
+                          enabled: true
+                      }
+                  }
+              },
+
+              series: [{
+                  name: 'Module',
+                  colorByPoint: true,
+                  data: [
+                  <?php foreach ($timeByModule as $value) {
+        					if ($value != "") {
+           						 echo "{ name: '$value->module',y: $value->aggregate,drilldown: true },";
+        					}
+    					}
+     				?>
+
+                  ]
+              }],
+
+              drilldown: {
+                  series: [
+
+                  <?php 
+                  							foreach ($timeByModule as $value) {
+
+                  								$timeByModuleDistrict = DB::connection('mysql2')->select(DB::raw("SELECT sum(mins_spent) as aggregate,district FROM moduleusage WHERE module='$value->module' GROUP BY district"));
+
+                                                   //query to get time spent by module by district and by facility 
+                                           		foreach ($timeByModuleDistrict as $v) {
+                                                   $timeByModuleDistrictFacility = DB::connection('mysql2')->select(DB::raw("SELECT sum(mins_spent) as aggregate,name FROM moduleusage WHERE district ='$v->district' GROUP BY name"));
+                                                   
+                                                   echo "{ id : '$v->district' , name : '$v->district' , data : [ ";
+
+                                                   foreach ($timeByModuleDistrictFacility as $vf) {
+                  										//print_r( array('id'=>"$v->district","name"=>"$v->district", "data" => [array("name"=>"$vf->facility_name","y"=>"$vf->aggregate")]) );
+                  										echo " { y: $vf->aggregate,name: '$vf->name'  } ,";
+                  									}
+
+                  									echo " ] },";
+
+                                           		}
+
+                                           	}
+
+                  ?>
+                  ]
+              }
+          });
+
+
 
 
      });

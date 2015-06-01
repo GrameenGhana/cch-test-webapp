@@ -60,7 +60,7 @@ class StatsController extends BaseController {
         
         
         
-        $usersByGroup["chart"] = array("plotBackgroundColor" => null,"plotBorderWidth"=>1,"plotShadow"=>false);
+        $usersByGroup["chart"] = array("plotBackgroundColor" => null,"plotBorderWidth"=>1,"plotShadow"=>true);
         $usersByGroup["title"] = array("text" => " ");
         //$chartArray["tooltip"] = array("pointFormat" => "{series.name}: <b>{point.percentage:.1f}%</b>");
         $usersByGroup["legend"] = array("enabled" => true);
