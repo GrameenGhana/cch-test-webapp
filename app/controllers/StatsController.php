@@ -194,4 +194,9 @@ class StatsController extends BaseController {
             return View::make('stats.timeseriescharts');
     }
 
+     public function showQuizCharts()
+    {
+            return View::make('stats.quizcharts');
+    }
+
 }

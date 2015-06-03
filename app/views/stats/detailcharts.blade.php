@@ -13,6 +13,9 @@
  //modules with count of time spent
  $timeByModule = DB::connection('mysql2')->select(DB::raw('SELECT module,sum(mins_spent) as aggregate FROM moduleusage  GROUP BY module'));
 
+ //course with count of users 
+ $usersByCourse = DB::connection('mysql2')->select(DB::raw('SELECT course,count(username) as aggregate FROM learningcenter_courses  GROUP BY course'));
+
 ?>
 @section('content')	
 
@@ -43,6 +46,14 @@
                 <div class="row" id="timespentmoduleBox">
 
                     <div id="time_module_container" class="col-md-8"></div>
+                    
+                </div>
+
+                <hr class="space">
+
+                <div class="row" id="userscourseBox">
+
+                    <div id="users_courses_container" class="col-md-8"></div>
                     
                 </div>
 @stop
@@ -509,6 +520,129 @@
                                            		}
 
                                            	}
+
+                  ?>
+                  ]
+              }
+          });
+
+
+
+// users per courses chart
+          $('#users_courses_container').highcharts({
+              chart: {
+                  type: 'column',
+                  events: {
+                      drilldown: function (e) {
+                          if (!e.seriesOptions) {
+
+                              var chart = this,
+                                  drilldowns = {
+
+                                     <?php 
+
+                                     foreach ($usersByCourse as $value) {
+                           if ($value != "") {
+                               echo "'$value->course' : { 
+                                name: '$value->course' ,
+                                data : [ ";
+
+                            $usersByCourseDistrict = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,district FROM learningcenter_courses WHERE course='$value->course' GROUP BY district"));
+
+                            foreach ($usersByCourseDistrict as $v) {
+                              echo "{name: '$v->district',y: $v->aggregate,drilldown: '$v->district' },";
+                            }
+
+                                                echo "]},";
+                                            
+                                        }
+
+                                    }
+                                    
+                                      
+
+                     ?>
+
+                                  },
+
+                                  
+
+                                series = drilldowns[e.point.name];
+
+                              // Show the loading label
+                              chart.showLoading('Loading data ...');
+
+                              setTimeout(function () {
+                                  chart.hideLoading();
+                                  chart.addSeriesAsDrilldown(e.point, series);
+                              }, 1000);
+                          }
+
+                      }
+                  }
+              },
+              title: {
+                  text: 'Users By Courses'
+              },
+              xAxis: {
+                  type: 'category'
+              },
+
+              legend: {
+                  enabled: false
+              },
+
+              credits: {
+                  enabled: false
+              },
+
+              plotOptions: {
+                  series: {
+                      borderWidth: 0,
+                      dataLabels: {
+                          enabled: true
+                      }
+                  }
+              },
+
+              series: [{
+                  name: 'Module',
+                  colorByPoint: true,
+                  data: [
+                  <?php foreach ($usersByCourse as $value) {
+                  if ($value != "") {
+                       echo "{ name: '$value->course',y: $value->aggregate,drilldown: true },";
+                  }
+              }
+            ?>
+
+                  ]
+              }],
+
+              drilldown: {
+                  series: [
+
+                  <?php 
+                                foreach ($usersByCourse as $value) {
+
+                                  $usersByCourseDistrict = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,district FROM learningcenter_courses WHERE course='$value->course' GROUP BY district"));
+
+                                                   //query to get users by course and  by facility 
+                                              foreach ($usersByCourseDistrict as $v) {
+                                                   $usersByCourseDistrictFacility = DB::connection('mysql2')->select(DB::raw("SELECT count(*) as aggregate,name FROM learningcenter_courses WHERE district ='$v->district' GROUP BY name"));
+                                                   
+                                                   echo "{ id : '$v->district' , name : '$v->district' , data : [ ";
+
+                                                   foreach ($usersByCourseDistrictFacility as $vf) {
+                                      //print_r( array('id'=>"$v->district","name"=>"$v->district", "data" => [array("name"=>"$vf->facility_name","y"=>"$vf->aggregate")]) );
+                                      echo " { y: $vf->aggregate,name: '$vf->name'  } ,";
+                                    }
+
+                                    echo " ] },";
+
+                                              }
+
+                                            }
 
                   ?>
                   ]

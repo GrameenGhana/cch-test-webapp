@@ -26,6 +26,7 @@ Route::group(array('prefix' => 'api/v1'), function()
 Route::get('stats/generalcharts', array('uses' => 'StatsController@showGeneralCharts'));
 Route::get('stats/detailedcharts', array('uses' => 'StatsController@showDetailedCharts'));
 Route::get('stats/timeseriescharts', array('uses' => 'StatsController@showTimeseriesCharts'));
+Route::get('stats/quizcharts', array('uses' => 'StatsController@showQuizCharts'));
 
 Route::get('/getusersbyrole', array('as'=>'getdata', 'uses'=>'StatsController@getUsersVyRoleData'));
 

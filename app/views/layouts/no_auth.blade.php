@@ -42,6 +42,8 @@
         {{ HTML::script("js/plugins/highcharts/highcharts.js"); }}
         {{ HTML::script("js/plugins/highcharts/modules/drilldown.js"); }}
         {{ HTML::script("js/plugins/highcharts/highcharts-more.js"); }}
+        <!-- Scrolling -->
+        {{ HTML::script('js/jquery.scrollUp.min.js'); }}
 
         <script type="text/javascript">
 var base_url = "http://localhost/cch/dumsor";
@@ -166,6 +168,7 @@ var EventTracker = function () {
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="{{ URL::to('stats/generalcharts')}}"><i class="fa fa-angle-double-right"></i> General Charts </a></li>
+                                <li><a href="{{ URL::to('stats/quizcharts')}}"><i class="fa fa-angle-double-right"></i> Quiz Charts </a></li>
                                 <li><a href="{{ URL::to('stats/detailedcharts')}}"><i class="fa fa-angle-double-right"></i> Detailed Charts </a></li>
                                 <li><a href="{{ URL::to('stats/timeseriescharts')}}"><i class="fa fa-angle-double-right"></i> Timeseries Charts </a></li>
                             </ul>
