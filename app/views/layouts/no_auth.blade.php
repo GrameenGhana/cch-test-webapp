@@ -7,43 +7,43 @@
         <title>CCH Admin Dashboard</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
-        {{ HTML::style('css/bootstrap.min.css'); }} 
+        {{ HTML::style('cch/dumsor/css/bootstrap.min.css'); }} 
         <!-- font Awesome -->
-        {{ HTML::style('css/font-awesome.min.css'); }} 
+        {{ HTML::style('cch/dumsor/css/font-awesome.min.css'); }} 
         <!-- Ionicons -->
-        {{ HTML::style('css/ionicons.min.css'); }} 
+        {{ HTML::style('cch/dumsor/css/ionicons.min.css'); }} 
         <!-- Morris chart -->
-        {{ HTML::style('css/morris/morris.css'); }} 
+        {{ HTML::style('cch/dumsor/css/morris/morris.css'); }} 
         <!-- jvectormap -->
-        {{ HTML::style('css/jvectormap/jquery-jvectormap-1.2.2.css'); }} 
+        {{ HTML::style('cch/dumsor/css/jvectormap/jquery-jvectormap-1.2.2.css'); }} 
         <!-- fullCalendar -->
-        {{ HTML::style('css/fullcalendar/fullcalendar.css'); }} 
+        {{ HTML::style('cch/dumsor/css/fullcalendar/fullcalendar.css'); }} 
         <!-- Daterange picker -->
-        {{ HTML::style('css/datepicker/datepicker3.css'); }} 
+        {{ HTML::style('cch/dumsor/css/datepicker/datepicker3.css'); }} 
         <!-- bootstrap wysihtml5 - text editor -->
-        {{ HTML::style('css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); }} 
+        {{ HTML::style('cch/dumsor/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); }} 
         <!-- Theme style -->
-        {{ HTML::style('css/AdminLTE.css'); }} 
+        {{ HTML::style('cch/dumsor/css/AdminLTE.css'); }} 
 
-        {{ HTML::style('css/chosen/chosen.css'); }} 
+        {{ HTML::style('cch/dumsor/css/chosen/chosen.css'); }} 
 
         <!-- jQuery 2.0.2 -->
    
         
-        {{ HTML::script('js/jquery.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/jquery.min.js'); }}
         <!-- jQuery UI 1.10.3 -->
-        {{ HTML::script('js/jquery-ui-1.10.3.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/jquery-ui-1.10.3.min.js'); }}
         <!-- Bootstrap -->
-        {{ HTML::script('js/bootstrap.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/bootstrap.min.js'); }}
         <!-- Date picker -->
-        {{ HTML::script("js/plugins/datepicker/bootstrap-datepicker.js"); }}
-        {{ HTML::script("js/plugins/chosen/chosen.jquery.js"); }}
+        {{ HTML::script("cch/dumsor/js/plugins/datepicker/bootstrap-datepicker.js"); }}
+        {{ HTML::script("cch/dumsor/js/plugins/chosen/chosen.jquery.js"); }}
         <!-- Highcharts -->
-        {{ HTML::script("js/plugins/highcharts/highcharts.js"); }}
-        {{ HTML::script("js/plugins/highcharts/modules/drilldown.js"); }}
-        {{ HTML::script("js/plugins/highcharts/highcharts-more.js"); }}
+        {{ HTML::script("cch/dumsor/js/plugins/highcharts/highcharts.js"); }}
+        {{ HTML::script("cch/dumsor/js/plugins/highcharts/modules/drilldown.js"); }}
+        {{ HTML::script("cch/dumsor/js/plugins/highcharts/highcharts-more.js"); }}
         <!-- Scrolling -->
-        {{ HTML::script('js/jquery.scrollUp.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/jquery.scrollUp.min.js'); }}
 
         <script type="text/javascript">
 var base_url = "http://localhost/cch/dumsor";
@@ -68,7 +68,7 @@ var EventTracker = function () {
 
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.cch/dumsor/js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
         @show
@@ -160,17 +160,17 @@ var EventTracker = function () {
                             </ul>
                         </li>
 
-                        <li class="treeview {{ Request::is('stats/*') ? 'active' : '' }}">
+                        <li class="treeview {{ Request::is('cch/dumsor/stats/*') ? 'active' : '' }}">
                             <a href="#">
                                 <i class="fa fa-bar-chart-o"></i>
                                 <span>Stats</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="{{ URL::to('stats/generalcharts')}}"><i class="fa fa-angle-double-right"></i> General Charts </a></li>
-                                <li><a href="{{ URL::to('stats/quizcharts')}}"><i class="fa fa-angle-double-right"></i> Quiz Charts </a></li>
-                                <li><a href="{{ URL::to('stats/detailedcharts')}}"><i class="fa fa-angle-double-right"></i> Detailed Charts </a></li>
-                                <li><a href="{{ URL::to('stats/timeseriescharts')}}"><i class="fa fa-angle-double-right"></i> Timeseries Charts </a></li>
+                                <li><a href="{{ URL::to('cch/dumsor/stats/generalcharts')}}"><i class="fa fa-angle-double-right"></i> General Charts </a></li>
+                                <li><a href="{{ URL::to('cch/dumsor/stats/quizcharts')}}"><i class="fa fa-angle-double-right"></i> Quiz Charts </a></li>
+                                <li><a href="{{ URL::to('cch/dumsor/stats/detailedcharts')}}"><i class="fa fa-angle-double-right"></i> Detailed Charts </a></li>
+                                <li><a href="{{ URL::to('cch/dumsor/stats/timeseriescharts')}}"><i class="fa fa-angle-double-right"></i> Timeseries Charts </a></li>
                             </ul>
                         </li>
 
@@ -209,26 +209,26 @@ var EventTracker = function () {
         </div><!-- ./wrapper -->
 
         <!-- Morris.js charts -->
-        {{ HTML::script('js/plugins/morris/morris.min.js'); }}
-        {{ HTML::script('js/raphael-min.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/morris/morris.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/raphael-min.js'); }}
         <!-- Sparkline -->
-        {{ HTML::script('js/plugins/sparkline/jquery.sparkline.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/sparkline/jquery.sparkline.min.js'); }}
         <!-- jvectormap --> 
-        {{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'); }}
-        {{ HTML::script('js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'); }}
         <!-- fullCalendar -->
-        {{ HTML::script('js/plugins/fullcalendar/fullcalendar.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/fullcalendar/fullcalendar.min.js'); }}
         <!-- jQuery Knob Chart -->
-        {{ HTML::script('js/plugins/jqueryKnob/jquery.knob.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/jqueryKnob/jquery.knob.js'); }}
         <!-- Bootstrap WYSIHTML5 -->
-        {{ HTML::script('js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); }}
         <!-- iCheck -->
-        {{ HTML::script('js/plugins/iCheck/icheck.min.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/iCheck/icheck.min.js'); }}
         <!-- data tables -->
-        {{ HTML::script('js/plugins/datatables/jquery.dataTables.js'); }}
-        {{ HTML::script('js/plugins/datatables/dataTables.bootstrap.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/datatables/jquery.dataTables.js'); }}
+        {{ HTML::script('cch/dumsor/js/plugins/datatables/dataTables.bootstrap.js'); }}
         <!-- AdminLTE App -->
-        {{ HTML::script('js/AdminLTE/app.js'); }}
+        {{ HTML::script('cch/dumsor/js/AdminLTE/app.js'); }}
 
         @yield('script')
     </body>

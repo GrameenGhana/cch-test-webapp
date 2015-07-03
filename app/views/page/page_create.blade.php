@@ -239,3 +239,5 @@
 </script>
 
 @stop
+
+adb pull /data/org.grameenfoundation.cch.supervisor/databases/cchsupervisor.db
